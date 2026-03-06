@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+
+body {
+    font-family: 'Chakra Petch', sans-serif;
+    background-color: #555555;
+    margin: 0;
+    padding: 20px;
+    overflow: hidden;
+}
+.vis {
+    height: 800px;
+    width: 800px;
+    background-color: #afafaf;
+    justify-self: center;
+    border-radius: 15px;
+}
+.topbar {
+    position: relative;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 25px;
+    background-color: #bbbbbb;
+    border-radius: 15px 15px 0 0;
+    text-align: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.sidemenu {
+    position: relative;
+    top: -25px;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #e5e5e5;
+    border-radius: 15px 0 0 15px;
+    display:flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    border-right: #555555 2px solid;
+} 
+.sidemenu::before {
+    content: "";
+    background-color: #ffffff00;
+    width: 100%;
+    height: 25px;
+    justify-content: left;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+item {
+    background-color: #CACACA;
+    width: 100%;
+    height: 25px;
+    justify-content: left; 
+    padding-left: 5px;
+    cursor: pointer;
+}
+item:nth-of-type(even) {
+    background-color: #e5e5e5;
+    width: 100%;
+    height: 25px;
+    justify-content: left;
+    padding-left:5px;
+}
+.mainmenu {
+    position: relative;
+    top: -825px;
+    left: 250px;
+    width: calc(100% - 250px);
+    height: 100%;
+    background-color: #e5e5e599;
+    border-radius: 0 15px 15px 0;
+    display:flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-left: #555555 2px solid;
+} 
+.mainmenu::before {
+    content: "";
+    background-color: #ffffff00;
+    width: 100%;
+    height: 25px;
+    justify-content: left;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+.infobox {
+    position:sticky;
+    top: 700px;
+    width: 100%;
+    height: 175px;
+    background-color: #bbbbbb;
+    border-top: #555555 2px solid;
+    padding: 10px;
+}
+.metadata {
+    position:sticky;
+    top: 700px;
+    width: 100%;
+    height: 385px;
+    background-color: #bbbbbb;
+    border-top: #555555 2px solid;
+    padding: 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-overflow: clip;
+    text-wrap-mode: nowrap;
+}
+.albumart {
+    width: 200px;
+    height: 200px;
+    background-color: #e5e5e5;
+    border-radius: 15px;
+    align-self: center;
+    background-size: cover;
+}
+.lazyhorizontal {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+}
+.lazyhorizontal p {
+    margin-left: 5px;
+}
+.lazyvertical {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+.controlpanel {
+    background-color: #e5e5e5;
+    width: 200px;
+    height: 50px;
+    border-radius: 50px;
+    display: flex;
+    flex-direction: row;
+    gap:50px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px
+}
+.controlpanel img {
+    width: 25px;
+    height: 25px;
+    fill: #555555;
+    cursor: pointer;
+    padding: 0;
+    display: block;
+}
+label {
+    background-color: #CACACA;
+    padding:10px;
+    border:#555555 2px solid;
+    cursor:pointer;
+}
+input[type="text"] {
+    background-color: #e5e5e5;
+    border: #555555 2px solid;
+    padding: 10px;
+    width: 200px;
+}
+button {
+    background-color: #CACACA;
+    border: #555555 2px solid;
+    border-left: 0;
+    padding: 10px;
+    cursor: pointer;
+}
