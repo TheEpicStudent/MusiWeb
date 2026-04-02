@@ -1,13 +1,13 @@
 
     {
-        "item-main-1": "Read info box",
+        "item-main-1": "Offical Plugins:",
         "item-main-2": "",
-        "item-main-3": "",
+        "item-main-3": "Dark Mode",
         "item-main-4": "",
         "item-main-5": "",
         "item-main-6": "",
-        "item-main-7": "if you are reading this please make a plugin im beggin",
-        "item-main-8": "i put so much work into this",
+        "item-main-7": "",
+        "item-main-8": "",
         "item-main-9": "",
         "item-main-10": "",
         "item-main-11": "",
@@ -21,6 +21,6 @@
         "item-main-19": "",
         "item-main-20": "",
         "item-main-21": "",
-        "info-infobox": "<b>Hi!</b><p>You can make your own plugins for MusiWeb! </p><p>I havent made any docs yet :c but you can check out the source code and mabye figure it out for yourself?</p><sub>PLEASE MAKE A PLUGIN I WANT TO SEE WHAT PEOPLE CAN DO WITH THIS</sub>"
+        "info-infobox": "<p>Plugins make MusiWeb more powerful and customizable. Some plugins require a reload.</p><p>You can make your own plugins for MusiWeb aswell!</p>"
 
     }

@@ -1,8 +1,8 @@
 
     {
-        "item-main-1": "Welcome to MusiWeb!",
+        "item-main-1": "",
         "item-main-2": "",
-        "item-main-3": "Click one of the sidebar items to get started!",
+        "item-main-3": "",
         "item-main-4": "",
         "item-main-5": "",
         "item-main-6": "",
@@ -21,6 +21,6 @@
         "item-main-19": "",
         "item-main-20": "",
         "item-main-21": "",
-        "info-infobox": "<b>Welcome to MusiWeb</b><p>This is an online music player. We do not host any music files here, so you will have to supply your own.</p><p>You can add your own music files, or browse our collection of public playlists.</p>"
+        "info-infobox": "<p>Online playlists are like the radio, you can only listen to what's being played right now.</p><b>Unfortunately, online playlists (ion) have been delayed.</b>"
 
     }

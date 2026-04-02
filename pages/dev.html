@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev tools page</title>
+</head>
+<body>
+    <h4>Dev tools</h4>
+    <p>bookmarklet generator</p>
+    <input type="text" id="name" placeholder="plugin name">
+    <input type="text" id="author" placeholder="author">
+    <input type="text" id="javascript" placeholder="Your javascript url">
+    <input type="text" id="css" placeholder="your css url">
+    <button id="button" onclick="generate();">generate</button>
+    <p id="output">output here</p>
+
+    <script>
+        const button = document.getElementById('button')
+        function generate() {
+            let output = `javascript:(()=>{pluginvars={"plugin":{"name":"${document.getElementById('name').value}","auth":"${document.getElementById('author').value}","quick":"Quick description of the plugin","longer":"A longer description of your plugin","contents":{"javascript":"${document.getElementById('javascript').value}","css":"${document.getElementById('css').value}"}},"placeholder":false};})()`;
+            document.getElementById('output').innerHTML = output
+        }
+    </script>
+</body>

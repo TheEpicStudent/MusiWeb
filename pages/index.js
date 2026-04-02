@@ -1,3 +1,5 @@
+
+
 var jsmediatags = window.jsmediatags;
 let usersettings = localStorage.getItem('settings') ? JSON.parse(localStorage.getItem('settings')) : {
     "devmode": false,
@@ -16,6 +18,29 @@ if (usersettings.experimental['localstorage-playlist']) {
 } else {
     var playlist = {};
 }
+
+// PLUGIN VARS
+let pluginvars = {
+    "plugin":{
+        "name":"Plugin name",
+        "auth":"Author's name",
+        "quick":"Quick description of the plugin",
+        "longer":"A longer description of your plugin",
+        "contents":{
+            "javascript":"(URL to your raw js file)",
+            "css":"(leave blank if no custom css)"
+        } // }
+    },
+    "placeholder":true
+    // CHANGE TO FALSE
+}
+// edit the pluginvars thru a bookmarklet for testing
+// javascript:(()=>{pluginvars={"plugin":{"name":"Plugin name","auth":"Author's name","quick":"Quick description of the plugin","longer":"A longer description of your plugin","contents":{"javascript":"","css":""}},"placeholder":false};})()
+
+let maintextcolor = '#000000';  // for text color, because it changes for dynamic content and the css will not override it
+
+maintextcolor = document.body.style.color;
+
 
 function getIDs() {
     fetch('/id.json')
@@ -51,7 +76,7 @@ function display([contentJSON, title]) {
             if (data[key] === '[dynamic]') {
                 elements[key].style.color = '#ffffff00'
             } else {
-                elements[key].style.color = '#000000';
+                elements[key].style.color = maintextcolor;
             }
             elements[key].onclick = '';
         });
@@ -72,6 +97,10 @@ function tabby(tab) {
     } else if (tab == 'plugins') { // PLEASE MAKE PLUGINS :PLEADING-FACE: I WANT TO SEE COMMUNITY PLUGINS AAAAAAAAAAAAAAAAAAAAAAAAA
         tab = 'plugins';
         display(['/content/plugins.json', 'Plugins']);
+        setTimeout(() => {
+            elements['item-main-3'].onclick = () => showplugininfo(elements['item-main-3']);
+            elements['item-main-4'].onclick = () => showplugininfo(elements['item-main-4']);
+        }, 500);
     } else if (tab == 'playlist') {
         tab = 'playlist';
         if (playlist == {}) {
@@ -82,8 +111,10 @@ function tabby(tab) {
     } else if (tab == 'settings') {
         tab = 'settings';
         display(['/content/settings.json', 'Settings']);
-        setTimeout(settings, 100);
-        
+        setTimeout(settings, 500);
+    } else if (tab == 'online') {
+        tab = 'online';
+        display(['/content/online.json', 'Online']);
     }
 }
 
@@ -134,7 +165,12 @@ function testPlaylist() {
 
 function uploadFile() {
     const infoboxbefore = elements['info-infobox'].innerHTML;
-    elements['info-infobox'].innerHTML = '<p>Upload a file:</p><label for="fileInput">Choose File</label><p>Or put the URL of the direct file here:</p><input type="text" id="urlInput" placeholder="https://example.com/file.mp3"><button id="urlSubmit">Submit</button>';
+    if (!usersettings.experimental['url-upload']) {
+        urltxt = '';
+    } else {
+        urltxt = '<p>Or put the URL of the direct file here:</p><input type="text" id="urlInput" placeholder="https://example.com/file.mp3"><button id="urlSubmit">Submit</button>';
+    }
+    elements['info-infobox'].innerHTML = '<p>Upload a file:</p><label for="fileInput">Choose File</label>' + urltxt;
     function handleFileChange(event) {
         const file = event.target.files[0];
         document.getElementById('fileInput').removeEventListener('change', handleFileChange);
@@ -180,7 +216,7 @@ function playlistAdd(file) {
                 if (!added && data[key] === '[dynamic]' && !playlist[key]) {
                     playlist[key] = fileObj;
                     elements[key].innerHTML = file.name;
-                    elements[key].style.color = '#000000';
+                    elements[key].style.color = maintextcolor;
                     elements[key].onclick = () => {
                         sound(fileObj.url, null, 'play', 'repl');
                         updateMetadata();
@@ -220,7 +256,7 @@ function displayPlaylist() {
                     if (data[key] === '[dynamic]') {
                         elements[key].style.color = '#ffffff00'
                     } else {
-                        elements[key].style.color = '#000000';
+                        elements[key].style.color = maintextcolor;
                     }
                 }
             });
@@ -266,7 +302,11 @@ function updateMetadata() {
                     for (let i = 0; i < data.length; i++) {
                         base64String += String.fromCharCode(data[i]);
                     }
+                    if (base64String.length > 0) {
                     elements['meta-albumart'].style.backgroundImage = `url(${`data:${format};base64,${btoa(base64String)}`})`;
+                    } else {
+                        elements['meta-albumart'].style.backgroundImage = 'none';
+                    }
 
                 },
                 onError: function(error) {
@@ -284,20 +324,51 @@ function settings() {
     localStorage.setItem('settings', JSON.stringify(usersettings));
     elements['item-main-5'].onclick = () => {
         display(['/content/settings/es.json', 'ES']);
-        
+        es();
 
     }
 }
 function es() {
+    setTimeout(() => {
     elements['item-main-1'].onclick = () => { tabby('home') };
     elements['item-main-3'].onclick = () => {
         usersettings.experimental['localstorage-playlist'] = !usersettings.experimental['localstorage-playlist'];
         localStorage.setItem('settings', JSON.stringify(usersettings));
+        let before = elements['item-main-3'].innerHTML;
+        elements['item-main-3'].innerHTML = usersettings.experimental['localstorage-playlist'] ? 'Enabled' : 'Disabled';
+        setTimeout(() => {elements['item-main-3'].innerHTML = before;}, 1000);
     }
     elements['item-main-6'].onclick = () => {
         usersettings.experimental['url-upload'] = !usersettings.experimental['url-upload'];
         localStorage.setItem('settings', JSON.stringify(usersettings));
+        let before = elements['item-main-6'].innerHTML;
+        elements['item-main-6'].innerHTML = usersettings.experimental['url-upload'] ? 'Enabled' : 'Disabled';
+        setTimeout(() => {elements['item-main-6'].innerHTML = before;}, 1000);
     }
+    elements['item-main-7'].onclick = () => {
+        usersettings = {
+    "devmode": false,
+    "experimental": {
+        "localstorage-playlist": false,
+        "custom-plugins": false,
+        "offical-plugins": true,
+        "url-upload": false
+    },
+    "version-made-with": "beta 26.1.0"
+    };
+    localStorage.setItem('settings', JSON.stringify(usersettings));
+    let before = elements['item-main-7'].innerHTML;
+    elements['item-main-7'].innerHTML = 'Updated';
+    setTimeout(() => {elements['item-main-7'].innerHTML = before;}, 1000);
+    }
+    elements['item-main-4'].onclick = () => {
+        usersettings.experimental['custom-plugins'] = !usersettings.experimental['custom-plugins'];
+        localStorage.setItem('settings', JSON.stringify(usersettings));
+        let before = elements['item-main-4'].innerHTML;
+        elements['item-main-4'].innerHTML = usersettings.experimental['custom-plugins'] ? 'Enabled' : 'Disabled';
+        setTimeout(() => {elements['item-main-4'].innerHTML = before;}, 1000);
+    }
+}, 500);
 }
 
 function clearplaylist() {
@@ -305,3 +376,117 @@ function clearplaylist() {
     localStorage.removeItem('playlist');
     console.debug('Playlist cleared');
 }
+
+function loadCustomPlugin() {
+    if (!usersettings.experimental['custom-plugins']) {
+        console.warn('Custom plugins are disabled in settings. Enable them to use this feature.');
+        return;
+    };
+    if (pluginvars.placeholder) {
+        console.warn('No loaded plugin');
+        return;
+    }
+    const script = pluginvars.plugin.contents['javascript'];
+    try {
+        fetch(script)
+        .then(response => response.text())
+        .then(eval);
+    } catch (error) {
+        console.error(`plugin error: ${error}`)
+        alert(`plugin error: \n\n${error} \n\nPlease reload.`)
+    }
+    if (pluginvars.plugin.contents['css'] != '') {
+        localStorage.setItem('forcecss', pluginvars.plugin.contents['css']);
+        window.location.reload();
+    }
+    
+}
+function pluginTest() {
+    console.log('woa')
+}
+function loadfromurl(url) {
+    if (!usersettings.experimental['url-upload']) {
+        console.warn('URL upload is disabled in settings. Enable it to use this feature.');
+        return;
+    }
+    fetch(url)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('they did NOT like you bruh');
+        }
+
+        })
+}
+
+if (usersettings.experimental['custom-plugins'] && !pluginvars.placeholder) {
+    setTimeout(() => {
+        console.error(`Roses are red,\nViolets are blue,\nUnexpected '}'\non line 32.`)
+        // love whoevers reading this :heart:
+    }, Math.random() * 5000);
+}
+
+function showplugininfo(element) {
+    try {
+        let name = element.innerHTML;
+        let infobox = elements['info-infobox']
+        fetch('content/plugins/plugindata.json')
+        .then(response => response.json())
+        .then(data => {
+            let title = data[name].name;
+            let description = data[name].description;
+            let author = data[name].author;
+            let version = data[name].version;
+            infobox.innerHTML = `<h2>${title}</h2><p>${description}</p><p>By ${author} | Version: ${version}</p><button onclick="load('${data[name].name}')">Activate</button>`;
+        });
+    } catch (error) {
+        alert(error)
+    }
+}
+
+function load(plugin) {
+    fetch('content/plugins/plugindata.json')
+    .then(response => response.json())
+    .then(data => {
+        let script = data[plugin].js;
+        let css = data[plugin].css;
+        if (script != '') {
+            try {
+                fetch(script)
+                .then(response => response.text())
+                .then(eval);
+            } catch (error) {
+                console.error(`plugin error: ${error}`)
+                alert(`plugin error: \n\n${error} \n\nplease make an issue on github or tell someone on #musiweb on slack.`)
+            }
+        }
+        if (css != '') {
+            localStorage.setItem('forcecss', css);
+            if (script != '') {
+                localStorage.setItem('forcejs', script);
+            }
+            window.location.reload();
+        }
+    });
+}
+
+function checkjs() {
+    if (!usersettings.experimental['offical-plugins']) {
+        alert('you have disabled official plugins in settings.')
+        return;
+    }
+    if (localStorage.getItem('forcejs')) {
+        let script = localStorage.getItem('forcejs');
+        try {
+            
+            fetch(script)
+            .then(response => response.text())
+            .then(eval);
+        } catch (error) {
+            console.error(`plugin error: ${error}`)
+            alert(`plugin error: \n\n${error} \n\nplease make an issue on github or tell someone on #musiweb on slack.`)
+        }
+        localStorage.removeItem('forcejs');
+    }
+}
+
+checkjs();

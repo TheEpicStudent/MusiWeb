@@ -1,0 +1,20 @@
+{
+    "Dark Mode": {
+        "name": "Dark Mode",
+        "description": "A simple plugin that turns on dark mode.",
+        "author": "TheEpicStudent",
+        "version": "1.0.0",
+        "js": "content/plugins/darkmode/dark.js",
+        "css": "content/plugins/darkmode/dark.css",
+        "id": "E4DT5"
+    },
+    "Test": {
+        "name": "Test",
+        "description": "A test plugin.",
+        "author": "TheEpicStudent",
+        "version": "x.x.x",
+        "js": "",
+        "css": "",
+        "id": "YUMMY"
+    }
+}

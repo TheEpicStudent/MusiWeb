@@ -15,6 +15,11 @@ app.get('/', (req, res) => {
     const filepath = path.join(__dirname, 'pages', 'index.html');
     res.end(readFileSync(filepath));
 });
+app.get('/dev', (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    const filepath = path.join(__dirname, 'pages', 'dev.html');
+    res.end(readFileSync(filepath));
+});
 
 
 server.listen(PORT, () => {

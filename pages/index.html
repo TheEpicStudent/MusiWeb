@@ -1,14 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        if (localStorage.getItem('forcecss')) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = localStorage.getItem('forcecss');
+    document.head.appendChild(link);
+    localStorage.removeItem('forcecss');
+} else {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'style.css';
+    document.head.appendChild(link);
+}
+    </script>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MusiWeb</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+    <meta name="description" content="A VLC inspired web music player">
+    <meta name="keywords" content="music web, music, web player, online">
 </head>
 <body>
+    <noscript>
+        <p>Use javascript bro</p>
+    </noscript>
     <div class="vis">
         <div class="topbar">
             <b>MusiWeb</b>
@@ -20,11 +37,11 @@
             <item onclick="tabby('settings')" id="item-menu-settings">Settings</item>
             <item onclick="tabby('about')" id="item-menu-about">About</item>
             <item></item>
-            <item onclick="tabby('plugins')">Plugins</item>
+            <item onclick="tabby('plugins')" id="item-menu-plugins">Plugins</item>
             <item></item>
-            <item></item>
-            <item></item>
-            <item></item>
+            <item id="item-menu-plugin1"></item>
+            <item id="item-menu-plugin2"></item>
+            <item id="item-menu-plugin3"></item>
             <item></item>
             <item></item>
             <item></item>
@@ -46,9 +63,9 @@
         </div>
         <div class="mainmenu">
             <div id="item-main-0" style="background-color: #e5e5e5;width: 100%;height: 25px;justify-content: left;position: relative;top: 0;left: 0;"></div>
-            <item id="item-main-1"></item>
+            <item id="item-main-1">Welcome to MusiWeb!</item>
             <item id="item-main-2"></item>
-            <item id="item-main-3"></item>
+            <item id="item-main-3">Click one of the sidebar items to get started!</item>
             <item id="item-main-4"></item>
             <item id="item-main-5"></item>
             <item id="item-main-6"></item>
