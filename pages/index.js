@@ -325,7 +325,13 @@ function settings() {
     elements['item-main-5'].onclick = () => {
         display(['/content/settings/es.json', 'ES']);
         es();
-
+    }
+    elements['item-main-4'].onclick = () => {
+        window.location.href = '/dev';
+    }
+    if (usersettings.experimental['custom-plugins']) {
+        elements['item-main-7'].innerHTML = 'Load Custom Plugin'
+        elements['item-main-7'].onclick = () => {loadCustomPlugin()};
     }
 }
 function es() {
